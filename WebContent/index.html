@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="js/checkWeather.js"></script>
+<title>Weather</title>
+</head>
+<body>
+
+
+
+    <div id="locationField">
+<h1>Check the Weather</h1>
+<div>
+	<p>Where are you? :</p>
+      <input id="location" placeholder="Where are you?"
+             onFocus="geolocate()" type="text" style="width: 300px;"></input>
+      <input id="check" type="button" value="Check"></input>
+  		
+</div>
+<div id= "result"></div>
+    </div>
+
+
+    <script>
+      // This example displays an address form, using the autocomplete feature
+      // of the Google Places API to help users fill in the information.
+
+      // This example requires the Places library. Include the libraries=places
+      // parameter when you first load the API. For example:
+      // <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places">
+
+      var placeSearch, autocomplete;
+
+      function initAutocomplete() {
+        // Create the autocomplete object, restricting the search to geographical
+        // location types.
+        autocomplete = new google.maps.places.Autocomplete(
+            /** @type {!HTMLInputElement} */(document.getElementById('location')),
+            {types: ['geocode']});
+
+        // When the user selects an address from the dropdown, populate the address
+        // fields in the form.
+      }
+
+
+      // Bias the autocomplete object to the user's geographical location,
+      // as supplied by the browser's 'navigator.geolocation' object.
+      function geolocate() {
+        if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(function(position) {
+            var geolocation = {
+              lat: position.coords.latitude,
+              lng: position.coords.longitude
+            };
+            var circle = new google.maps.Circle({
+              center: geolocation,
+              radius: position.coords.accuracy
+            });
+            autocomplete.setBounds(circle.getBounds());
+          });
+        }
+      }
+    </script>
+   <!--  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDv8stsY2fsyyWaYJ1H0qc8o00VmB5vPrw&libraries=places&callback=initAutocomplete"
+        async defer></script>
+ -->
+
+
+
+</body>
+</html>
